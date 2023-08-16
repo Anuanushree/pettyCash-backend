@@ -42,6 +42,20 @@ const incomecontroller = {
             console.log('Error in graph', error);
             response.json({ message: "Error in graph" })
         }
+    },
+    dataEdit: async (request, response) => {
+        try {
+            const { _id, salary, date, incentive, others, rentIncome, rent, utilies, loan, transport, glossary } = request.body;
+            const income = await Income.findByIdAndUpdate(
+                _id,
+                { salary, incentive, others, rentIncome, date, rent, glossary, transport, loan, utilies });
+            await income.save();
+            response.json({ message: "data updated successfully" })
+
+        } catch (error) {
+            console.log("Error in updated data :", error);
+            response.json({ error: "Error in updating data" })
+        }
     }
 }
 module.exports = incomecontroller;

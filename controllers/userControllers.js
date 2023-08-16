@@ -19,6 +19,7 @@ const usercontroller = {
                 username,
                 email,
                 password: hashedpassword,
+                profilename: "default.avif"
             })
             await newUser.save();
 
@@ -69,7 +70,7 @@ const usercontroller = {
             if (!user) {
                 return response.json({ error: "Invalid mail id" });
             }
-            const link = `http://localhost:3000/resetPassword/${user.id}`;
+            const link = `http://localhost:5173/resetpassword/${user.id}`;
 
             const transporter = nodemailer.createTransport({
                 service: 'gmail',

@@ -35,7 +35,12 @@ const userSchema = new mongoose.Schema({
     ],
     profilename: {
         type: String,
-    }
+    },
+    imageId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Image"
+    },
+
 });
 userSchema.set('toJSON', {
     transform: (document, returnedObject) => {

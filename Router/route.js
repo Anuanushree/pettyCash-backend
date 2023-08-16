@@ -10,22 +10,9 @@ userRouter.post('/forgot', usercontroller.forgot);
 userRouter.post('/reset', usercontroller.reset);
 
 
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'assets/')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    }
-})
-
-// const upload = multer({ storage: storage });
-const upload = multer({ dest: 'assets/' });
-console.log(upload.single('profile'))
 userRouter.get('/updateuser', authmiddleware.verifyToken, usercontroller.getprofile);
 userRouter.put('/updateuser', authmiddleware.verifyToken, usercontroller.updateUser);
 userRouter.post('/incomedata', authmiddleware.verifyToken, incomecontroller.dataEntry);
 userRouter.get('/graph', authmiddleware.verifyToken, incomecontroller.graph)
+userRouter.put('/incomeEdit', authmiddleware.verifyToken, incomecontroller.dataEdit)
 module.exports = userRouter;

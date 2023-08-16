@@ -7,7 +7,7 @@ const authmiddleware = {
         const token = request.headers.authorization;
         console.log(token);
         if (!token) {
-            return response.json({ message: "authentication error token doesnot exixts" });
+            return response.json({ error: "authentication error token doesnot exists" });
         }
         try {
             const chktoken = jwt.verify(token, SECRET);
@@ -15,6 +15,7 @@ const authmiddleware = {
             next();
         } catch (error) {
             console.log('authentication error', error);
+            response.json({ error: "authentication error" })
         }
     }
 }
