@@ -5,7 +5,7 @@ const User = require('../model/user');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../frontend/src/assets');
+        cb(null, 'public/assets/');
     },
     filename: function (req, file, cb) {
 

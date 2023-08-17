@@ -19,7 +19,7 @@ const usercontroller = {
                 username,
                 email,
                 password: hashedpassword,
-                profilename: "default.avif"
+                profilename: "default.png"
             })
             await newUser.save();
 

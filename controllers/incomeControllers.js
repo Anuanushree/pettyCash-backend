@@ -56,6 +56,17 @@ const incomecontroller = {
             console.log("Error in updated data :", error);
             response.json({ error: "Error in updating data" })
         }
-    }
+    },
+    datadelete: async (request, response) => {
+        try {
+            const id = request.params.id;
+            const income = await Income.findByIdAndDelete(id)
+            response.json({ message: "data deleted successfully" })
+
+        } catch (error) {
+            console.log("Error in updated data :", error);
+            response.json({ error: "Error in Deleting data" })
+        }
+    },
 }
 module.exports = incomecontroller;
