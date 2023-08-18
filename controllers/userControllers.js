@@ -70,7 +70,7 @@ const usercontroller = {
             if (!user) {
                 return response.json({ error: "Invalid mail id" });
             }
-            const link = `https://pettycash-uvd8.onrender.com/resetpassword/${user.id}`;
+            const link = `https://friendly-torrone-b17166.netlify.app/resetpassword/${user.id}`;
 
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
