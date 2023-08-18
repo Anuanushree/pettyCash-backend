@@ -30,7 +30,7 @@ const incomecontroller = {
             response.json({ message: "data saved successfully" });
         } catch (error) {
             console.log("error in save incone data :", error);
-            response.json({ message: "error in save income data" });
+            response.status(404).json({ error: "error in save income data" });
         }
     },
     graph: async (request, response) => {
@@ -40,7 +40,7 @@ const incomecontroller = {
             response.send(graph);
         } catch (error) {
             console.log('Error in graph', error);
-            response.json({ message: "Error in graph" })
+            response.status(404).json({ message: "Error in graph" })
         }
     },
     dataEdit: async (request, response) => {
@@ -54,7 +54,7 @@ const incomecontroller = {
 
         } catch (error) {
             console.log("Error in updated data :", error);
-            response.json({ error: "Error in updating data" })
+            response.status(404).json({ error: "Error in updating data" })
         }
     },
     datadelete: async (request, response) => {
@@ -65,7 +65,7 @@ const incomecontroller = {
 
         } catch (error) {
             console.log("Error in updated data :", error);
-            response.json({ error: "Error in Deleting data" })
+            response.status(404).json({ error: "Error in Deleting data" })
         }
     },
 }

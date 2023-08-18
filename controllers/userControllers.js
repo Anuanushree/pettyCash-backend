@@ -12,7 +12,7 @@ const usercontroller = {
             const { username, email, password } = request.body;
             const chkuser = await User.findOne({ email })
             if (chkuser) {
-                return response.json({ error: "mail id already exists" })
+                return response.status(404).json({ error: "mail id already exists" })
             }
             const hashedpassword = await bcrypt.hash(password, 10);
             const newUser = new User({
@@ -27,7 +27,7 @@ const usercontroller = {
 
         } catch (error) {
             console.log("Error in signup", error);
-            response.json({ message: "Error in sigup" })
+            response.status(404).json({ error: "Error in sigup" })
         }
     },
     signin: async (request, response) => {
@@ -35,11 +35,11 @@ const usercontroller = {
             const { email, password } = request.body;
             const user = await User.findOne({ email })
             if (!user) {
-                return response.json({ error: "email doesn't exists" })
+                return response.status(404).json({ error: "email doesn't exists" })
             }
             const chkpassword = await bcrypt.compare(password, user.password);
             if (!chkpassword) {
-                return response.json({ error: "invalid password" })
+                return response.status(404).json({ error: "invalid password" })
             }
             const payload = {
                 username: user.username,
@@ -59,7 +59,7 @@ const usercontroller = {
             const user = await User.find({}, {});
             response.send(user)
         } catch (error) {
-            response.json({ message: "Error in getting list " })
+            response.status(404).json({error: "Error in getting list " })
             console.log("Error in getting list :", error);
         }
     },
@@ -68,7 +68,7 @@ const usercontroller = {
             const { email } = request.body;
             const user = await User.findOne({ email })
             if (!user) {
-                return response.json({ error: "Invalid mail id" });
+                return response.status(404).json({ error: "Invalid mail id" });
             }
             const randomstring = Math.random().toString(20).substring(4, 15)
             const link = `https://friendly-torrone-b17166.netlify.app/resetpassword/${user.id}`;
@@ -106,7 +106,7 @@ const usercontroller = {
             const user = await User.findById(id);
             console.log(user)
             if (!user) {
-                return response.json({ error: "Error in reset, pls try again" })
+                return response.status(404).json({ error: "Error in reset, pls try again" })
             }
             if (user.passwordActivated == true && user.resetToken !== '') {
                 const hashedpassword = await bcrypt.hash(password, 10);
@@ -117,10 +117,10 @@ const usercontroller = {
 
                 response.json({ message: "password updated successfully" })
             } else {
-                response.json({ error: "this link is invalid" })
+                response.status(404).json({ error: "this link is invalid" })
             }
         } catch (error) {
-            response.json({ error: "Error in reset password" })
+            response.status(404).json({ error: "Error in reset password" })
             console.log("Error in reset password");
         }
     },
@@ -138,7 +138,7 @@ const usercontroller = {
 
         } catch (error) {
             console.log('Error in updateuser:', error);
-            response.json({ error: "error in updateing user" })
+            response.status(404).json({ error: "error in updating user" })
         }
     },
     getprofile: async (request, response) => {
@@ -148,7 +148,7 @@ const usercontroller = {
             response.json(user);
         } catch (error) {
             console.log("Error in getting user:", error);
-            response.json({ message: "error in display user" })
+            response.status(404).json({ message: "error in display user" })
         }
     }
 }
