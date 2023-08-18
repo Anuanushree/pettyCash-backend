@@ -70,8 +70,11 @@ const usercontroller = {
             if (!user) {
                 return response.json({ error: "Invalid mail id" });
             }
+            const randomstring = Math.random().toString(20).substring(4, 15)
             const link = `https://friendly-torrone-b17166.netlify.app/resetpassword/${user.id}`;
-
+            user.resetToken = randomstring;
+            user.passwordActivated = true;
+            await user.save();
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -105,12 +108,17 @@ const usercontroller = {
             if (!user) {
                 return response.json({ error: "Error in reset, pls try again" })
             }
+            if (user.passwordActivated == true && user.resetToken !== '') {
+                const hashedpassword = await bcrypt.hash(password, 10);
+                user.password = hashedpassword;
+                user.passwordActivated = false;
+                user.resetToken = '';
+                await user.save();
 
-            const hashedpassword = await bcrypt.hash(password, 10);
-            user.password = hashedpassword;
-            await user.save();
-            response.json({ message: "password updated successfully" })
-
+                response.json({ message: "password updated successfully" })
+            } else {
+                response.json({ error: "this link is invalid" })
+            }
         } catch (error) {
             response.json({ error: "Error in reset password" })
             console.log("Error in reset password");

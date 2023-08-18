@@ -23,6 +23,13 @@ const userSchema = new mongoose.Schema({
     userLname: {
         type: String,
     },
+    resetToken: {
+        type: String,
+    },
+    passwordActivated: {
+        type: Boolean,
+        default: false
+    },
     address: String,
     phone: Number,
     gender: String,
