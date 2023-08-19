@@ -15,6 +15,7 @@ userRouter.put('/updateuser', authmiddleware.verifyToken, usercontroller.updateU
 userRouter.post('/incomedata', authmiddleware.verifyToken, incomecontroller.dataEntry);
 userRouter.get('/graph', authmiddleware.verifyToken, incomecontroller.graph)
 userRouter.put('/incomeEdit', authmiddleware.verifyToken, incomecontroller.dataEdit);
+userRouter.get('/income/:id', authmiddleware.verifyToken, incomecontroller.income);
 userRouter.delete('/incomedelete/:id', authmiddleware.verifyToken, incomecontroller.datadelete)
 
 

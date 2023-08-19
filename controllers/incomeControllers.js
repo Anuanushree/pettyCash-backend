@@ -43,6 +43,15 @@ const incomecontroller = {
             response.status(404).json({ message: "Error in graph" })
         }
     },
+    income: async (request, response) => {
+        try {
+            const id = request.params.id;
+            const income = await Income.findById(id);
+            response.json(income)
+        } catch (error) {
+            console.log("Error in income :", error)
+        }
+    },
     dataEdit: async (request, response) => {
         try {
             const { _id, salary, incentive, others, rentIncome, rent, utilies, loan, transport, glossary } = request.body;
