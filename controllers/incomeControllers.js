@@ -45,10 +45,10 @@ const incomecontroller = {
     },
     dataEdit: async (request, response) => {
         try {
-            const { _id, salary, date, incentive, others, rentIncome, rent, utilies, loan, transport, glossary } = request.body;
+            const { _id, salary, incentive, others, rentIncome, rent, utilies, loan, transport, glossary } = request.body;
             const income = await Income.findByIdAndUpdate(
                 _id,
-                { salary, incentive, others, rentIncome, date, rent, glossary, transport, loan, utilies });
+                { salary, incentive, others, rentIncome, rent, glossary, transport, loan, utilies });
             await income.save();
             response.json({ message: "data updated successfully" })
 
@@ -59,14 +59,20 @@ const incomecontroller = {
     },
     datadelete: async (request, response) => {
         try {
+            const userId = request.userId;
             const id = request.params.id;
-            const income = await Income.findByIdAndDelete(id)
+            const user = await User.findById(userId);
+            if (user.data.includes(id)) {
+                user.data = user.data.filter((postid) => postid != id)
+            }
+            await user.save();
+            const income = await Income.findByIdAndDelete(id);
             response.json({ message: "data deleted successfully" })
 
         } catch (error) {
             console.log("Error in updated data :", error);
             response.status(404).json({ error: "Error in Deleting data" })
         }
-    },
+    }
 }
 module.exports = incomecontroller;

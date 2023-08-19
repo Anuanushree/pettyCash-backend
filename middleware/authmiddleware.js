@@ -7,7 +7,7 @@ const authmiddleware = {
         const token = request.headers.authorization;
         console.log(token);
         if (!token) {
-            return response.status(404).json({ error: "authentication error token doesnot exists" });
+            return response.status(404).json({ error: "authentication error" });
         }
         try {
             const chktoken = jwt.verify(token, SECRET);
